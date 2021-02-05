@@ -105,7 +105,7 @@ public class KMRiiwaSunriseApplication extends RoboticsAPIApplication{
 
 		// Configure robot;
 		controller = getController("KUKA_Sunrise_Cabinet_1");
-		kmp = getContext().getDeviceFromType(KmpOmniMove.class);
+		kmp = getContext().getDeviceFromType(KmpOmniMove.class);		
 		lbr = getContext().getDeviceFromType(LBR.class);
 
 		//lbr.moveAsync(ptpHome().setJointVelocityRel(0.5));
@@ -130,7 +130,8 @@ public class KMRiiwaSunriseApplication extends RoboticsAPIApplication{
 					AppRunning = true;
 					System.out.println("Application ready to run!");	
 					break;
-			}else if((System.currentTimeMillis() - startTime) > shutDownAfterMs){
+			}
+		else if((System.currentTimeMillis() - startTime) > shutDownAfterMs){
 				System.out.println("Could not connect to a command node after " + shutDownAfterMs/1000 + "s. Shutting down.");	
 				shutdown_application();
 				break;
@@ -181,9 +182,6 @@ public class KMRiiwaSunriseApplication extends RoboticsAPIApplication{
 		System.out.println("Running app!");
 		
 		// Start all connected nodes
-		kmp_commander.setPriority(Thread.MAX_PRIORITY); // Remove?
-		lbr_commander.setPriority(Thread.MAX_PRIORITY);
-		
 		if(!(kmp_commander ==null)){
 			if(kmp_commander.isSocketConnected()) {
 				kmp_commander.start();
@@ -215,37 +213,37 @@ public class KMRiiwaSunriseApplication extends RoboticsAPIApplication{
 			}
 		}
 		while(AppRunning)
-		{    
-			AppRunning = (!(kmp_commander.getShutdown() || lbr_commander.getShutdown()));
+		{   
+			AppRunning = !(kmp_commander.getShutdown() || lbr_commander.getShutdown());
 			
 			if(StateChange){
 				System.out.println("State change.");
 				StateChange = false;
-				// Endre prio til 2/7?
-				
-				// Gjør endringer på Sunrise PC-en!!
-
-				if(!(threading_prio == "LBR") && !lbr_commander.getisPathFinished()){
+				if(!lbr_commander.getisPathFinished() || !(threading_prio == "LBR")){
+					lbr_commander.waiting = false;
+					lbr_sensor_reader.waiting = false;
+					lbr_status_reader.waiting = false;
+					
 					threading_prio = "LBR";
-					// kmp_commander.setPriority(Thread.MIN_PRIORITY);
-					kmp_status_reader.setPriority(Thread.MIN_PRIORITY);
-					
 					System.out.println("Threading priority: " + threading_prio);
 					
-					// lbr_commander.setPriority(Thread.MAX_PRIORITY);
-					lbr_sensor_reader.setPriority(Thread.MAX_PRIORITY);
-					lbr_status_reader.setPriority(Thread.MAX_PRIORITY);
+					// kmp_commander.waiting = true;
+					kmp_status_reader.waiting = true;
+					kmp_sensor_reader.waiting = true;
 				}
-				else if(!(threading_prio == "KMP") && lbr_commander.getisPathFinished()){
-					threading_prio = "KMP";
-					// lbr_commander.setPriority(Thread.MIN_PRIORITY);
-					lbr_sensor_reader.setPriority(Thread.MIN_PRIORITY);
-					lbr_status_reader.setPriority(Thread.MIN_PRIORITY);
+				else if(lbr_commander.getisPathFinished()  || !(threading_prio == "KMP")){
+					lbr_commander.waiting = true;
+					lbr_sensor_reader.waiting = true;
+					lbr_status_reader.waiting = true;
 					
+					threading_prio = "KMP";
 					System.out.println("Threading priority: " + threading_prio);
+					
+					// kmp_commander.waiting = false;
+					kmp_status_reader.waiting = false;
+					kmp_sensor_reader.waiting = false;
 
-					kmp_status_reader.setPriority(Thread.MAX_PRIORITY);
-
+					
 				}
 			}
 			

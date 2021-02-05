@@ -33,6 +33,8 @@ public class KMP_sensor_reader extends Node{
 	private static int laser_B1 = 1801;
 	private static int laser_B4 = 1802;
 	
+	// Thread handler
+	public volatile boolean waiting = false;
 	
 	public KMP_sensor_reader(int laserport, int odomport, String LaserConnectionType, String OdometryConnectionType) {
 		super(laserport, LaserConnectionType, odomport, OdometryConnectionType, "KMP sensor reader");
@@ -132,9 +134,15 @@ public class KMP_sensor_reader extends Node{
 	@Override
 	public void run() {
 		if(isLaserSocketConnected()) {
+			
+			while(waiting){}
+			
 			subscribe_kmp_laser_data();
 		}
 		if(isOdometrySocketConnected()) {
+			
+			while(waiting){}
+			
 			subscribe_kmp_odometry_data();
 		}
 		boolean attempt_reconnection=true;

@@ -32,6 +32,9 @@ public class KMP_status_reader extends Node{
 	private volatile boolean WarningField = false;
 	private volatile boolean ProtectionField = false;
 	private long last_sendtime = System.currentTimeMillis();
+	
+	// Thread handler
+	public volatile boolean waiting = false;
 
 	public KMP_status_reader(int port, KmpOmniMove robot,String ConnectionType) {
 		super(port, ConnectionType, "KMP status reader");
@@ -47,6 +50,7 @@ public class KMP_status_reader extends Node{
 	public void run() {
 		while(isNodeRunning())
 		{	
+			while(waiting){}
 
 			if(System.currentTimeMillis()-last_sendtime>30){
 				updateOperationMode();

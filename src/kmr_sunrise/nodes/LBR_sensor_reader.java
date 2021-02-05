@@ -32,6 +32,9 @@ public class LBR_sensor_reader extends Node{
 	int port;
 	String ConnectionType;
 	private long last_sendtime = System.currentTimeMillis();
+	
+	// Thread handler
+	public volatile boolean waiting = false;
 
 	
 	
@@ -50,6 +53,8 @@ public class LBR_sensor_reader extends Node{
 	public class MonitorSensorConnectionThread extends Thread {
 		public void run(){
 			while(!(isSocketConnected()) && (!(closed))) {
+				
+				while(waiting){}
 
 				createSocket();
 				if (isSocketConnected()){

@@ -38,7 +38,8 @@ public class UDPSocket implements ISocket{
 		    	int kuka_port = this.COMport; // change this if cannot bind error
 		        InetSocketAddress socket_address = new InetSocketAddress(kuka_port);
 		    	
-		    	String ros_host = "192.168.10.117"; // REMOTE PC
+		        String ros_host = "172.31.1.248"; //Havard Raspberry Pi
+		    	//String ros_host = "192.168.10.117"; // REMOTE PC
 
 		    	int ros_port = this.COMport;
 		        InetAddress address = InetAddress.getByName(ros_host);

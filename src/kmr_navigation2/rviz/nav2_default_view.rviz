@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /TF1/Frames1
         - /TF1/Tree1
+        - /LaserScan1
         - /Controller1/Local Costmap1
       Splitter Ratio: 0.5833333134651184
     Tree Height: 421
@@ -131,27 +132,11 @@ Visualization Manager:
           Value: false
         left_outer_knuckle:
           Value: false
-        link_1:
-          Value: true
-        link_2:
-          Value: true
-        link_3:
-          Value: true
-        link_4:
-          Value: true
-        link_5:
-          Value: true
-        link_6:
-          Value: true
         link_7:
           Value: false
-        map:
-          Value: true
         metall_plate_left_link:
           Value: false
         metall_plate_right_link:
-          Value: false
-        odom:
           Value: false
         right_inner_finger:
           Value: false
@@ -175,73 +160,7 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        map:
-          odom:
-            base_footprint:
-              base_link:
-                back_left_wheel_link:
-                  {}
-                back_right_wheel_link:
-                  {}
-                base_link_middle:
-                  base_link_top:
-                    base_iiwa:
-                      link_1:
-                        link_2:
-                          link_3:
-                            link_4:
-                              link_5:
-                                link_6:
-                                  link_7:
-                                    adapter:
-                                      d435_manipulator_link:
-                                        {}
-                                      gripper_base_link:
-                                        gripper_middle_point:
-                                          {}
-                                        left_inner_knuckle:
-                                          {}
-                                        left_outer_knuckle:
-                                          left_outer_finger:
-                                            left_inner_finger:
-                                              left_inner_finger_pad:
-                                                {}
-                                        right_inner_knuckle:
-                                          {}
-                                        right_outer_knuckle:
-                                          right_outer_finger:
-                                            right_inner_finger:
-                                              right_inner_finger_pad:
-                                                {}
-                                    tool0:
-                                      {}
-                    d435_base_front_link:
-                      d435_base_front_color_optical_frame_link:
-                        {}
-                      d435_base_front_depth_optical_frame_link:
-                        {}
-                    metall_plate_left_link:
-                      d435_base_left_link:
-                        camera3_color_optical_frame_link:
-                          {}
-                        camera3_depth_optical_frame_link:
-                          {}
-                    metall_plate_right_link:
-                      d435_base_right_link:
-                        camera2_color_optical_frame_link:
-                          {}
-                        camera2_depth_optical_frame_link:
-                          {}
-                front_left_wheel_link:
-                  {}
-                front_right_wheel_link:
-                  {}
-                laser_B1_link:
-                  scan:
-                    {}
-                laser_B4_link:
-                  scan_2:
-                    {}
+        {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -273,7 +192,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Best Effort
-        Value: /scan_concatenated
+        Value: /scan
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -661,7 +580,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 60.523414611816406
+      Scale: 25.90595817565918
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
       X: 0.7235275506973267

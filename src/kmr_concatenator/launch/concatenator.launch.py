@@ -31,7 +31,7 @@ def generate_launch_description(argv=sys.argv[1:]):
 
     # Simulated is 'true' if the KMR is simulated in Gazebo. 
     # If true - 3D coordinates, if false - 2D coordinates from laser scanners.
-    simulated = 'true'
+    simulated = 'false'
 
     return LaunchDescription([
         launch_ros.actions.Node(

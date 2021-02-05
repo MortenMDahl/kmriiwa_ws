@@ -29,9 +29,9 @@ def generate_launch_description():
     map_dir = LaunchConfiguration(
         'map',
         default=os.path.join(
-            get_package_share_directory('kmr_navigation2'),
-            'map',
-            'gazebo.yaml'))
+            get_package_share_directory('kmr_slam_toolbox'),
+            'created_maps',
+            'GAZEBO.yaml'))
 
     param_dir = LaunchConfiguration(
         'params_file',
